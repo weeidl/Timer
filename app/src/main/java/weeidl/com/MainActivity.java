@@ -17,8 +17,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
 
     private SeekBar seekBar;
     private TextView textView;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private Button button;
     private CountDownTimer countDownTimer;
     private int defaultInterval;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +36,11 @@ public class MainActivity extends AppCompatActivity {
 
         seekBar = findViewById(R.id.seekBar2);
         textView = findViewById(R.id.textView);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         seekBar.setMax(600);
         isTimerOn = false;
-        setIntervalFromSharedPreferences(PreferenceManager.getDefaultSharedPreferences(this));
+        setIntervalFromSharedPreferences(sharedPreferences);
 
         button = findViewById(R.id.button);
 
@@ -60,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
 
     }
 
@@ -137,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         button.setText("Start");
         seekBar.setEnabled(true);
         isTimerOn = false;
-        setIntervalFromSharedPreferences(PreferenceManager.getDefaultSharedPreferences(this));
+        setIntervalFromSharedPreferences(sharedPreferences);
     }
 
     @Override
@@ -158,20 +163,30 @@ public class MainActivity extends AppCompatActivity {
                 Intent openAbove = new Intent(this, AboutActivity.class);
                 startActivity(openAbove);
                 return true;
-        } else if (id == R.id.action_mein){
-            Intent openMein = new Intent(this, MainActivity.class);
-            startActivity(openMein);
-            return true;
-            }
+        }
 
 
         return super.onOptionsItemSelected(item);
     }
 
     private void setIntervalFromSharedPreferences(SharedPreferences sharedPreferences){
-        defaultInterval = sharedPreferences.getInt("default_interval", 30);
-        textView.setText("00:" + defaultInterval);
+
+        defaultInterval = Integer.valueOf(sharedPreferences.getString("default_interval", "30"));
+        long defaultIntervalMillis = defaultInterval * 1000;
+        updateTimer(defaultIntervalMillis);
         seekBar.setProgress(defaultInterval);
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals("default_interval")){
+            setIntervalFromSharedPreferences(sharedPreferences);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+    }
 }

@@ -19,7 +19,6 @@
         android:src="@drawable/bacgraund_timer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.909"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -27,12 +26,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="00:30"
-        android:textSize="60sp"
         android:textColor="@color/white"
+        android:textSize="60sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.535"
         app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.488" />
 
     <Button
         android:id="@+id/button"
@@ -57,17 +58,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:menu="@menu/timer_menu" />
-
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
