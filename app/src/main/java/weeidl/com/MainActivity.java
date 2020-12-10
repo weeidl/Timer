@@ -2,6 +2,7 @@ package weeidl.com;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean isTimerOn;
     private Button button;
     private CountDownTimer countDownTimer;
+    private int defaultInterval;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
         textView = findViewById(R.id.textView);
 
         seekBar.setMax(600);
-        seekBar.setProgress(30);
         isTimerOn = false;
+        setIntervalFromSharedPreferences(PreferenceManager.getDefaultSharedPreferences(this));
 
         button = findViewById(R.id.button);
 
@@ -80,8 +82,20 @@ public class MainActivity extends AppCompatActivity {
                             PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
                     if (sharedPreferences.getBoolean("enable_sound", true)){
-                        MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.alarm_siren_sound);
-                        mediaPlayer.start();
+
+                        String melodyName = sharedPreferences.getString("timer_melody", "bell");
+                        if (melodyName.equals("bell")){
+                            MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bell_sound);
+                            mediaPlayer.start();
+                        } else if (melodyName.equals("alarm siren")){
+                            MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.alarm_siren_sound);
+                            mediaPlayer.start();
+                        } else if (melodyName.equals("bip")){
+                            MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bip_sound);
+                            mediaPlayer.start();
+                        }
+
+
                     }
                     resetTimer();
                 }
@@ -120,11 +134,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void resetTimer(){
         countDownTimer.cancel();
-        textView.setText("00:30");
         button.setText("Start");
         seekBar.setEnabled(true);
         isTimerOn = false;
-        seekBar.setProgress(30);
+        setIntervalFromSharedPreferences(PreferenceManager.getDefaultSharedPreferences(this));
     }
 
     @Override
@@ -154,4 +167,11 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void setIntervalFromSharedPreferences(SharedPreferences sharedPreferences){
+        defaultInterval = sharedPreferences.getInt("default_interval", 30);
+        textView.setText("00:" + defaultInterval);
+        seekBar.setProgress(defaultInterval);
+    }
+
 }
