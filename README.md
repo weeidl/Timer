@@ -2,7 +2,7 @@
 
 ### - Feature:
 + Sound switch
-+Choice of music
++ Choice of music
 #### +Setting the timer time
 #### +Strip to adjust the time
 
