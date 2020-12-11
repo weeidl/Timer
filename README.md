@@ -1,7 +1,7 @@
 # TIMER
 
 ### - Feature:
-+ - Sound switch
++ Sound switch
 +Choice of music
 #### +Setting the timer time
 #### +Strip to adjust the time
