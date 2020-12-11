@@ -1,10 +1,10 @@
 # TIMER
 
 ### - Feature:
-#### + Sound switch
-#### + Choice of music
-#### + Setting the timer time
-#### + Strip to adjust the time
+#### +Sound switch
+#### +Choice of music
+#### +Setting the timer time
+#### +Strip to adjust the time
 
 
 
@@ -15,6 +15,7 @@
   <img src="https://github.com/weeidl/Timer/blob/master/ImageReadme/Timer_3.jpg" width="240" title="weeidl">
   <img src="https://github.com/weeidl/Timer/blob/master/ImageReadme/Timer_4.jpg" width="240" title="weeidl">
 </p>
+
 ##
 
 ### Follow Me
