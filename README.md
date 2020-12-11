@@ -1,6 +1,6 @@
 # TIMER
 
-### Feature:
+### Functions:
 + Sound switch
 + Choice of music
 + Setting the timer time
